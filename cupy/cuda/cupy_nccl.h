@@ -150,6 +150,8 @@ ncclDataType_t _get_proper_datatype(ncclDataType_t datatype) {
 
 #if (NCCL_VERSION_CODE < 2304)
 
+#warning "NCCL 2.2 and older versions are deprecated."
+
 ncclResult_t ncclGetVersion(int *version) {
     *version = 0;
     return ncclSuccess;

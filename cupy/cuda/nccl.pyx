@@ -4,6 +4,7 @@
 Wrapper for NCCL: Optimized primiteive for collective multi-GPU communication
 """
 cimport cython  # NOQA
+import warnings
 
 from cupy.cuda cimport driver
 
@@ -134,6 +135,9 @@ cdef class NcclCommunicator:
         ncclComm_t _comm
 
     def __init__(self, int ndev, tuple commId, int rank):
+        if get_version() < 2302:
+            warnings.warn('NCCL 2.2 and older versions are deprcated.',
+                          DeprecationWarning)
         cdef ncclUniqueId _uniqueId
         self._comm = <ncclComm_t>0
         assert len(commId) == NCCL_UNIQUE_ID_BYTES
